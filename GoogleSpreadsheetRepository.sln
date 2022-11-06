@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleSpreadsheetRepository", "GoogleSpreadsheetRepository.csproj", "{81E773EE-E00D-4A78-B816-F7528DD25B14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GooglespreadsheetTests", "GooglespreadsheetTests\GooglespreadsheetTests.csproj", "{23A62030-18F1-4A68-B035-F60A4E619471}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81E773EE-E00D-4A78-B816-F7528DD25B14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E773EE-E00D-4A78-B816-F7528DD25B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E773EE-E00D-4A78-B816-F7528DD25B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E773EE-E00D-4A78-B816-F7528DD25B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A62030-18F1-4A68-B035-F60A4E619471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A62030-18F1-4A68-B035-F60A4E619471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A62030-18F1-4A68-B035-F60A4E619471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A62030-18F1-4A68-B035-F60A4E619471}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
