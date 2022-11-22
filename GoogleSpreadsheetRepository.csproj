@@ -4,6 +4,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        
+        <PackageId>Redmoon.GoogleSpreadsheet</PackageId>
+        <Version>1.1.0</Version>
+        <Authors>Redmoon</Authors>
+        <Company>Redmoon</Company>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
