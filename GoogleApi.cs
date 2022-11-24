@@ -38,15 +38,23 @@ public class GoogleApi : IApiConnector
     public async Task<string[]?> GetTabsNamesAsync()
     {
         var request = _service.Spreadsheets.Get(_googleSpreadsheetId);
-        var response = await request.ExecuteAsync();
-        if (response == null) return null;
-        var tabNames = new string[response.Sheets.Count];
-        for (var i = 0; i < response.Sheets.Count; i++)
+        try
         {
-            tabNames[i] = response.Sheets[i].Properties.Title;
-        }
+            var response = await request.ExecuteAsync();
+            if (response == null) return null;
+            var tabNames = new string[response.Sheets.Count];
+            for (var i = 0; i < response.Sheets.Count; i++)
+            {
+                tabNames[i] = response.Sheets[i].Properties.Title;
+            }
 
-        return tabNames;
+            return tabNames;
+        }
+        catch
+        {
+            return null;
+        }
+        
     }
 
     public T[]? GetTabObjects<T>(string tabName) where T : new()
