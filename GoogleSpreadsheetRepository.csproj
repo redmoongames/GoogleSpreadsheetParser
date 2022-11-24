@@ -6,10 +6,9 @@
         <Nullable>enable</Nullable>
         
         <PackageId>Redmoon.GoogleSpreadsheet</PackageId>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
         <Authors>Redmoon</Authors>
         <Company>Redmoon</Company>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,14 +21,5 @@
       <Compile Remove="Test\**" />
     </ItemGroup>
 
-    <ItemGroup>
-      <EmbeddedResource Remove="GooglespreadsheetTests\**" />
-      <EmbeddedResource Remove="Test\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="GooglespreadsheetTests\**" />
-      <None Remove="Test\**" />
-    </ItemGroup>
 
 </Project>

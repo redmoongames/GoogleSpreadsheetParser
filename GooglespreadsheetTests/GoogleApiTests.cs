@@ -1,6 +1,6 @@
 using GoogleSpreadsheetRepository;
 
-namespace GooglespreadsheetTests;
+namespace qwdf;
 
 public class GoogleApiTests
 {
@@ -9,7 +9,6 @@ public class GoogleApiTests
     {
         var api = new GoogleApi("secrets.json", "1DilmUmo9ngvqCh1RxdgFAdUu3eY-zdRaSBw0fXbl1OE");
         var x = api.GetTabObjects<ConfigStats>("__config_stats");
-        Console.WriteLine("e");
     }
 }
 

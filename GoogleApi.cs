@@ -30,15 +30,16 @@ public class GoogleApi : IApiConnector
         });
     }
 
-    public string[] GetTabsNames()
+    public string[]? GetTabsNames()
     {
         return Task.Run(GetTabsNamesAsync).Result;
     }
 
-    public async Task<string[]> GetTabsNamesAsync()
+    public async Task<string[]?> GetTabsNamesAsync()
     {
         var request = _service.Spreadsheets.Get(_googleSpreadsheetId);
         var response = await request.ExecuteAsync();
+        if (response == null) return null;
         var tabNames = new string[response.Sheets.Count];
         for (var i = 0; i < response.Sheets.Count; i++)
         {
@@ -48,14 +49,15 @@ public class GoogleApi : IApiConnector
         return tabNames;
     }
 
-    public T[] GetTabObjects<T>(string tabName) where T : new()
+    public T[]? GetTabObjects<T>(string tabName) where T : new()
     {
-        return Task.Run(() => GetTabObjectsAsync<T>(tabName)).Result;
+        return Task.Run(() => GetTabObjectsAsync<T>(tabName)).Result ?? null;
     }
 
-    public async Task<T[]> GetTabObjectsAsync<T>(string tabName) where T : new()
+    public async Task<T[]?> GetTabObjectsAsync<T>(string tabName) where T : new()
     {
-        var rowData = LoadRowData(tabName);
+        var rowData = await LoadRowDataAsync(tabName);
+        if (rowData == null) return null;
         var headers = GetHeaders<T>(rowData);
         var rowObjectsArray = RefactorRowData(rowData, headers);
         var indexesOfPropNamesInRowData = GetRowDataIndexesOfGenericClass<T>(headers);
@@ -66,9 +68,6 @@ public class GoogleApi : IApiConnector
             var genericItem = new T();
             foreach (var propertyPair in indexesOfPropNamesInRowData)
             {
-                // var genericItemValue = propertyPair.Value != null
-                //     ? rowObject[(int)propertyPair.Value] 
-                //     : null;
                 try
                 {
                     var targetType = propertyPair.Key.PropertyType;
@@ -90,22 +89,7 @@ public class GoogleApi : IApiConnector
         return returnList.ToArray();
     }
 
-    private T? TransformToGeneric<T>(object genericItem) where T : class
-    {
-        T? returnValue = null;
-        try
-        {
-            returnValue = (T)Convert.ChangeType(genericItem, typeof(T));
-        }
-        catch (Exception e)
-        {
-            // ignored
-        }
-
-        return returnValue;
-    }
-
-    private Dictionary<PropertyInfo, int?> GetRowDataIndexesOfGenericClass<T>(string[] headers) where T : new()
+    private static Dictionary<PropertyInfo, int?> GetRowDataIndexesOfGenericClass<T>(string[] headers) where T : new()
     {
         var indexesOfPropNamesInRowData = new Dictionary<PropertyInfo, int?>();
         foreach (var propertyInfo in typeof(T).GetProperties())
@@ -138,7 +122,7 @@ public class GoogleApi : IApiConnector
         return headers;
     }
 
-    private int? FindIndexOfPropertyName(MemberInfo propertyInfo, IReadOnlyList<string> targets)
+    private static int? FindIndexOfPropertyName(MemberInfo propertyInfo, IReadOnlyList<string> targets)
     {
         for (var i = 0; i < targets.Count; i++)
         {
@@ -171,17 +155,23 @@ public class GoogleApi : IApiConnector
     }
     
 
-    private IList<IList<object>> LoadRowData(string tabName)
+    private IList<IList<object>>? LoadRowData(string tabName)
     {
         return Task.Run(() => LoadRowDataAsync(tabName)).Result;
     }
     
 
-    private async Task<IList<IList<object>>> LoadRowDataAsync(string tabName)
+    private async Task<IList<IList<object>>?> LoadRowDataAsync(string tabName)
     {
         var rangeFindColumn = $"{tabName}!A1:Z30";
         var request = _service.Spreadsheets.Values.Get(_googleSpreadsheetId, rangeFindColumn);
-        var response = await request.ExecuteAsync();
-        return response.Values;
+        try
+        {
+            return (await request.ExecuteAsync()).Values;
+        }
+        catch
+        {
+            return null;
+        }
     }
 }
