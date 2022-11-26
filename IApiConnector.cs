@@ -2,10 +2,9 @@ namespace GoogleSpreadsheetRepository;
 
 public interface IApiConnector
 {
-    string[]? GetTabsNames();
-    Task<string[]?> GetTabsNamesAsync();
+    IEnumerable<string> GetAllTabsNames();
+    Task<IEnumerable<string>> GetAllTabsNamesAsync();
 
-    T[]? GetTabObjects<T>(string tabName) where T : new();
-    Task<T[]?> GetTabObjectsAsync<T>(string tabName) where T : new();
-
+    IEnumerable<T> GetAllObjects<T>(string tabName, int maxCount)  where T : new();
+    Task<IEnumerable<T>> GetAllObjectsAsync<T>(string tabName, int maxCount)  where T : new();
 }

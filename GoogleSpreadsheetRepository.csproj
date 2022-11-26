@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         
         <PackageId>Redmoon.GoogleSpreadsheet</PackageId>
-        <Version>1.3.0</Version>
+        <Version>1.5.0</Version>
         <Authors>Redmoon</Authors>
         <Company>Redmoon</Company>
     </PropertyGroup>
@@ -19,6 +19,15 @@
     <ItemGroup>
       <Compile Remove="GooglespreadsheetTests\**" />
       <Compile Remove="Test\**" />
+      <Compile Remove="GoogleSpreadsheetTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="GoogleSpreadsheetTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="GoogleSpreadsheetTests\**" />
     </ItemGroup>
 
 
