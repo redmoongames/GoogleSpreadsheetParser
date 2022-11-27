@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         
         <PackageId>Redmoon.GoogleSpreadsheet</PackageId>
-        <Version>1.5.0</Version>
+        <Version>1.5.1</Version>
         <Authors>Redmoon</Authors>
         <Company>Redmoon</Company>
     </PropertyGroup>
