@@ -21,15 +21,28 @@ public class SpreadSheetAccess : IApiConnector
         return await _api.GetTabsNamesAsync();
     }
 
-    public IEnumerable<T> GetAllObjects<T>(string tabName, int maxCount = 60) where T : new()
+    public IEnumerable<T>? GetAllObjects<T>(string tabName, int maxCount = 60) where T : new()
     {
-        return Task.Run(() => GetAllObjectsAsync<T>(tabName, maxCount)).Result;
+        return Task.Run(() => GetAllObjectsAsync<T>(tabName, CancellationToken.None, maxCount)).Result;
     }
 
-    public async Task<IEnumerable<T>> GetAllObjectsAsync<T>(string tabName, int maxCount = 60) where T : new()
+    public async Task<IEnumerable<T>?> GetAllObjectsAsync<T>(string tabName, CancellationToken cancellationToken, int maxCount = 60) where T : new()
     {
-        var objects = await _api.GetTabObjectsAsync(tabName);
-        var result = _converter.ConvertTo<T>(objects);
-        return result;
+        IList<IList<object>> objects = null;
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            try
+            {
+                objects = await _api.GetTabObjectsAsync(tabName);
+                break;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("CANNOT LOAD FROM SPREADSHEET");
+                await Task.Delay(10_000, cancellationToken);
+            }
+        }
+
+        return objects == null ? null : _converter.ConvertTo<T>(objects);
     }
 }

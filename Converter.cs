@@ -10,6 +10,8 @@ public class Converter
     public IEnumerable<T> ConvertTo<T>(IList<IList<object>> rowData) 
         where T : new()
     {
+        if (rowData.Count == 0) 
+            throw new Exception($"rowData contains {rowData.Count} rows. Cannot find headers!");
         var headers = rowData
             .First()
             .Select(x => ((string)x)
@@ -51,7 +53,8 @@ public class Converter
             {
                 try
                 {
-                    spreadsheetValue = Convert.ChangeType(row[indexOfProperty], propertyInfo.PropertyType);
+                    var converter = TypeDescriptor.GetConverter(propertyInfo.PropertyType);
+                    spreadsheetValue = converter.ConvertFromString(row[indexOfProperty]);
                 }
                 catch (Exception e)
                 {
